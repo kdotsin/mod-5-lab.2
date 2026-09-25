@@ -5,9 +5,11 @@ const confPassInput = document.querySelector('#confirmPassword');
 const formInput = document.querySelector('#registrationForm')
 
 window.addEventListener('load', function() {
-    const userFormStr = localStorage.getItem('userForm');
-    const userData = JSON.parse(userFormStr);
-    userInput.value = userData.username;
+    const userFormStr = localStorage.getItem('userForm') ?? 'null';
+    if (userFormStr) {
+        const userData = JSON.parse(userFormStr);
+        userInput.value = userData.username;
+    }
 })
 
 userInput.addEventListener('input', function(event) {
@@ -34,7 +36,8 @@ formInput.addEventListener('submit', function(event) {
     event.preventDefault();
     validInput(userInput);
     validInput(emailInput);
-    validPassword(passInput);
+    validInput(passInput)
+    validPassword(confPassInput);
     
     if (!formInput.checkValidity()) {
         formInput.reportValidity();
